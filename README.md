@@ -132,3 +132,9 @@ If any private credential is missing, the checkout shows a clear error and does 
 6. Verify the Google Sheet row and both emails.
 
 Do not add Google credentials, SMTP passwords, or API keys to frontend code.
+
+`FRONTEND_URL` can contain one URL or multiple comma-separated URLs, for example:
+
+```env
+FRONTEND_URL=https://mezugraphy.mezustudio.com,https://mezugraphy.vercel.app
+```

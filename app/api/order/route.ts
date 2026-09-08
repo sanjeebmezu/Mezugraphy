@@ -7,13 +7,17 @@ export const runtime = 'nodejs';
 
 export async function POST(request: Request) {
   try {
-    const allowedOrigin = process.env.FRONTEND_URL;
+    const allowedOrigins = (process.env.FRONTEND_URL || '')
+      .split(',')
+      .map((origin) => origin.trim())
+      .filter(Boolean)
+      .map((origin) => new URL(origin).origin);
     const requestOrigin = request.headers.get('origin');
 
     if (
-      allowedOrigin &&
+      allowedOrigins.length > 0 &&
       requestOrigin &&
-      new URL(allowedOrigin).origin !== requestOrigin
+      !allowedOrigins.includes(requestOrigin)
     ) {
       return NextResponse.json(
         { success: false, error: 'This order form is not allowed.' },
